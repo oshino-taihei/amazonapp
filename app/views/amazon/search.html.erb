@@ -1,0 +1,77 @@
+<%= javascript_include_tag "d3" %>
+<%= javascript_include_tag "bootstrap" %>
+<h1>検索結果</h1>
+<div class="container" style="padding:20px 0">
+<span>
+<%= javascript_tag do %>
+   var nodes = <%= @results[:books].to_json.html_safe %> ;
+   var links = <%= @results[:links].to_json.html_safe %> ;
+   var w = 800;
+   var h = 500;
+
+   var force = d3.layout.force()
+                 .nodes(nodes)
+                 .links(links)
+                 .size([w, h])
+                 .linkStrength(1)
+                 .friction(0.9)
+                 .distance(200)
+                 .charge(-100)
+                 .gravity(0.1)
+                 .theta(0.8)
+                 .alpha(0.1)
+                 .start();
+
+    var svg = d3.select("span").append("svg").attr({width:w, height:h});
+    var link = svg.selectAll("line")
+                  .data(links)
+                  .enter()
+                  .append("line")
+                  .style({"stroke": "#ccc",
+                          "stroke-width": 1});
+    var node = svg.selectAll("circle")
+                  .data(nodes)
+                  .enter()
+                  .append("circle")
+                  .attr({r: 20,
+                         opacity: 0.5})
+                  .style({"fill": "red"})
+                  .call(force.drag);
+
+    var label = svg.selectAll('text')
+                    .data(nodes)
+                    .enter()
+                    .append('text')
+                    .attr({"text-anchor":"middle",
+                           "fill":"black"})
+                    .style({"font-size":11})
+                    .text(function(d) { return d.title; });
+
+    force.on("tick", function() {
+      link.attr({x1: function(d) { return d.source.x; },
+                 y1: function(d) { return d.source.y; },
+                 x2: function(d) { return d.target.x; },
+                 y2: function(d) { return d.target.y; }});
+      node.attr({cx: function(d) { return d.x; },
+                 cy: function(d) { return d.y; }});
+      label.attr({x: function(d) { return d.x; },
+                  y: function(d) { return d.y; }});
+    });
+
+<% end %>
+</span>
+<table class="table">
+<thead>
+<tr>
+  <th>From</th><th>To</th>
+</tr>
+</thead>
+<tbody>
+<% @results[:links].each do |link| %>
+<tr>
+  <td><%= link[:from_title] %></td><td><%= link[:to_title] %></td>
+</tr>
+<% end %>
+</tbody>
+</table>
+</div>

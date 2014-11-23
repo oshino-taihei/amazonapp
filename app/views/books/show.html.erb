@@ -1,0 +1,10 @@
+<h1>Amazon App</h1>
+
+<%= @book.title %>
+<% @links.each do |link| %>
+  <li><%= link.to_title %></li>
+<% end %>
+
+<% books = AmazonUtil::search_amazon("IT") %>
+<%= AmazonUtil::books_to_hash(books) %>
+
