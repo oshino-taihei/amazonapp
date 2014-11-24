@@ -1,7 +1,14 @@
 <%= javascript_include_tag "d3" %>
 <%= javascript_include_tag "bootstrap" %>
-<h1>検索結果</h1>
 <div class="container" style="padding:20px 0">
+<h1>Amazon App</h1>
+<p>キーワードで本のタイトルを検索:</p>
+<p>
+<%= form_tag('/amazon/search', method: :get) do %>
+  <% text_field :search, :keyword do |f| %>
+  <% end %>
+<% end %>
+</p>
 <span>
 <%= javascript_tag do %>
    var nodes = <%= @results[:books].to_json.html_safe %> ;
@@ -75,3 +82,4 @@
 </tbody>
 </table>
 </div>
+
