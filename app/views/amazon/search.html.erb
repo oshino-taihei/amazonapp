@@ -14,7 +14,7 @@
    var nodes = <%= @results[:books].to_json.html_safe %> ;
    var links = <%= @results[:links].to_json.html_safe %> ;
    var w = 800;
-   var h = 500;
+   var h = 600;
 
    var force = d3.layout.force()
                  .nodes(nodes)
@@ -22,8 +22,8 @@
                  .size([w, h])
                  .linkStrength(1)
                  .friction(0.9)
-                 .distance(200)
-                 .charge(-100)
+                 .distance(300)
+                 .charge(-200)
                  .gravity(0.1)
                  .theta(0.8)
                  .alpha(0.1)
@@ -36,6 +36,7 @@
                   .append("line")
                   .style({"stroke": "#ccc",
                           "stroke-width": 1});
+
     var g = svg.selectAll("g")
                   .data(nodes)
                   .enter()
