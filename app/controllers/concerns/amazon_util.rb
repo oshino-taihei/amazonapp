@@ -54,7 +54,7 @@ class AmazonUtil
   def self.make_common_request
     req = ["Service=AWSECommerceService","AWSAccessKeyId=#{ACCESS_KEY}","Version=#{VERSION}"]
     req << "AssociateTag=#{ASSOCIATE_TAG}"
-    req << "ResponseGroup=#{CGI.escape("ItemIds,ItemAttributes,Similarities")}"
+    req << "ResponseGroup=#{CGI.escape("ItemIds,ItemAttributes,Images,Similarities")}"
     req << "Timestamp=#{CGI.escape(Time.now.getutc.iso8601)}"
     return req
   end
@@ -82,7 +82,9 @@ class AmazonUtil
     doc.xpath('//items/item').each do |item, i|
       book = {}
       book[:asin] = item.xpath('asin/text()').to_s
+      book[:url] = item.xpath('detailpageurl/text()').to_s
       book[:title] = item.xpath('itemattributes/title/text()').to_s
+      book[:image] = item.xpath('smallimage/url/text()').to_s
       source = index_or_add(books, book)
       item.xpath('similarproducts/similarproduct').each do |s|
         link = {}
@@ -116,4 +118,3 @@ class AmazonUtil
     return arr.length - 1
   end
 end
-

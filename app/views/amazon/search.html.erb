@@ -43,16 +43,19 @@
                   .append("g")
                   .call(force.drag);
 
-    var node = g.append("circle")
-                  .attr({r: 20,
-                         opacity: 0.5})
-                  .style({"fill": "red"})
+    var node = g.append("image")
+                  .attr({"xlink:href": function(d) {
+                          return d.image;
+                         },
+                         "width":75,
+                         "height":60
+                        });
 
     var label = g.append("text")
                     .attr({"text-anchor":"middle",
                            "fill":"black"})
                     .style({"font-size":11})
-                    .text(function(d) { return d.title; });
+                    .text(function(d) { return d.title;});
 
     force.on("tick", function() {
       link.attr({x1: function(d) { return d.source.x; },
