@@ -94,6 +94,7 @@ class AmazonUtil
         to_book = {}
         to_book[:asin] = s.xpath('asin/text()').to_s
         to_book[:title] = s.xpath('title/text()').to_s
+        to_book[:image] = '/assets/book.svg'
         target = index_or_add(books, to_book)
 
         link[:source] = source
