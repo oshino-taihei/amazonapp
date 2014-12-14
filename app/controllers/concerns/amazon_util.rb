@@ -50,8 +50,8 @@ class AmazonUtil
 
   # 書籍をクローリングして取得する
   def self.crawl_amazon(keywords)
-    books = self.search_amazon(keywords)
-    return books
+    results = self.search_amazon(keywords)
+    return results
   end
 
   private

@@ -1,7 +1,15 @@
 <h1>Amazon App</h1>
-<p>ASIN: <%= @book.asin %></p>
-<p>タイトル: <%= @book.title %></p>
 <div class="container" style="padding:20px 0">
+<div class="form-group">
+  <label>ASIN</label>
+  <p class="form-control-static"><%= @book.asin %><p>
+</div>
+<div class="form-group">
+  <label>タイトル</label>
+  <p class="form-control-static"><%= @book.title %><p>
+</div>
+
+<h3>関連書籍</h3>
 <table class="table">
   <thead>
     <tr>

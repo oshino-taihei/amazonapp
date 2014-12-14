@@ -9,27 +9,32 @@ class AmazonController < ApplicationController
 
   def crawl
     results = AmazonUtil::crawl_amazon(params[:crawl][:keyword]) if params[:crawl]
+
     books = results[:books]
     books.each do |book|
       begin
         if b = Book.where(asin:book[:asin]).first
-          b = Book.new(asin:book[:asin], title:book[:title], url:book[:url], image:book[:image])
-          b.save
+          b.update(book)
+        else
+          b = Book.new(book)
         end
+        b.save
       rescue
-        puts book
+        puts "ERROR: Book insert or update: #{b.asin}:#{b.title}"
       end
     end
 
     links = results[:links]
     links.each do |link|
       begin
-        if l = Link.where(from_asin:link[:from_asin], to_asin:link[:to_asin])
-          l = Link.new(from_asin:link[:from_asin], from_title:link[:from_title], to_asin:link[:to_asin], to_title:link[:to_title])
-          l.save
+        if l = Link.where(from_asin:link[:from_asin], to_asin:link[:to_asin]).first
+          l.update(link)
+        else
+          l = Link.new(link)
         end
+        l.save
       rescue
-        puts link
+        puts "ERROR: Link insert or update: #{l}"
       end
     end
 
