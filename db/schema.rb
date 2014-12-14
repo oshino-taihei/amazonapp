@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141214090035) do
+ActiveRecord::Schema.define(version: 20141214111222) do
 
   create_table "books", force: true do |t|
     t.string   "asin",       limit: 13
@@ -25,12 +25,14 @@ ActiveRecord::Schema.define(version: 20141214090035) do
   add_index "books", ["asin"], name: "index_books_on_asin", unique: true
 
   create_table "links", force: true do |t|
-    t.string   "from_id"
+    t.string   "from_asin",  limit: 13
     t.string   "from_title"
-    t.string   "to_id"
+    t.string   "to_asin",    limit: 13
     t.string   "to_title"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "links", ["from_asin", "to_asin"], name: "index_links_on_from_asin_and_to_asin", unique: true
 
 end

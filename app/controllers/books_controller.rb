@@ -5,6 +5,6 @@ class BooksController < ApplicationController
 
   def show
     @book = Book.find(params[:id])
-    @links = Link.where(from_id: @book.asin)
+    @links = Link.where(from_asin: @book.asin)
   end
 end

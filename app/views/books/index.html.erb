@@ -12,8 +12,8 @@
   <tbody>
     <p>検索:</p>
     <p>
-      <%= form_tag('/amazon/search', method: :get) do %>
-        <% text_field :search, :keyword do |f| %>
+      <%= form_tag('/amazon/crawl', method: :get) do %>
+        <% text_field :crawl, :keyword do |f| %>
         <% end %>
       <% end %>
     </p>

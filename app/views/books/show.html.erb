@@ -1,10 +1,20 @@
 <h1>Amazon App</h1>
-
-<%= @book.title %>
-<% @links.each do |link| %>
-  <li><%= link.to_title %></li>
-<% end %>
-
-<% books = AmazonUtil::search_amazon("IT") %>
-<%= AmazonUtil::books_to_hash(books) %>
+<p>ASIN: <%= @book.asin %></p>
+<p>タイトル: <%= @book.title %></p>
+<div class="container" style="padding:20px 0">
+<table class="table">
+  <thead>
+    <tr>
+      <td>ASIN</td>
+      <td>タイトル</td>
+    </tr>
+  </thead>
+  <tbody>
+  <% @links.each do |link| %>
+    <tr>
+      <td><%= link.to_asin %></td>
+      <td><%= link.to_title %></td>
+    </tr>
+  <% end %>
+  </tbody>
 

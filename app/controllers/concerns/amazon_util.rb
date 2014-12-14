@@ -48,6 +48,12 @@ class AmazonUtil
     end
   end
 
+  # 書籍をクローリングして取得する
+  def self.crawl_amazon(keywords)
+    books = self.search_amazon(keywords)
+    return books
+  end
+
   private
 
   # 共通リクエストを作成する
@@ -88,7 +94,7 @@ class AmazonUtil
       source = index_or_add(books, book)
       item.xpath('similarproducts/similarproduct').each do |s|
         link = {}
-        link[:from_id] = book[:asin]
+        link[:from_asin] = book[:asin]
         link[:from_title] = book[:title]
 
         to_book = {}
@@ -99,9 +105,9 @@ class AmazonUtil
 
         link[:source] = source
         link[:target] = target
-        link[:from_id] = book[:asin]
+        link[:from_asin] = book[:asin]
         link[:from_title] = book[:title]
-        link[:to_id] = to_book[:asin]
+        link[:to_asin] = to_book[:asin]
         link[:to_title] = to_book[:title]
         links << link
       end
