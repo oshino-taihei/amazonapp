@@ -3,9 +3,11 @@
 one:
   asin: MyString
   title: MyString
-  book_id: 
+  url: MyString
+  image: MyString
 
 two:
   asin: MyString
   title: MyString
-  book_id: 
+  url: MyString
+  image: MyString

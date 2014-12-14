@@ -26,18 +26,25 @@
   }
 </style>
 <%= javascript_tag do %>
+  /***********************
+   * Initialize
+   ***********************/
    var nodes = <%= @results[:books].to_json.html_safe %> ;
    var links = <%= @results[:links].to_json.html_safe %> ;
    var w = 800;
    var h = 600;
 
+  /**********************
+   * Functions
+   **********************/
+function render_graph(nodes,links) {
    var force = d3.layout.force()
                  .nodes(nodes)
                  .links(links)
                  .size([w, h])
-                 .linkStrength(1)
+                 .linkStrength(0.1)
                  .friction(0.9)
-                 .distance(300)
+                 .linkDistance(200)
                  .charge(-200)
                  .gravity(0.1)
                  .theta(0.8)
@@ -80,14 +87,6 @@
                     };
                   });
 
-    /*
-    var label = g.append("text")
-                    .attr({"text-anchor":"middle",
-                           "fill":"black"})
-                    .style({"font-size":11})
-                    .text(function(d) { return d.title;});
-    */
-
     force.on("tick", function() {
       link.attr({x1: function(d) { return d.source.x; },
                  y1: function(d) { return d.source.y; },
@@ -95,6 +94,12 @@
                  y2: function(d) { return d.target.y; }});
       g.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
     });
+};
+  /***********************
+   * MAIN
+   ***********************/
+  render_graph(nodes, links);
+
 <% end %>
 </span>
 <table class="table">

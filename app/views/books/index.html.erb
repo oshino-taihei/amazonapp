@@ -2,7 +2,12 @@
 <div class="container" style="padding:20px 0">
 <table class="table">
   <thead>
-    <tr><td>書籍</td><td>ASIN</td></tr>
+    <tr>
+      <td>タイトル</td>
+      <td>ASIN</td>
+      <td>URL</td>
+      <td>画像</td>
+    </tr>
   </thead>
   <tbody>
     <p>検索:</p>
@@ -17,6 +22,8 @@
     <tr>
       <td><%= link_to book.title, book_path(book.id) %></td>
       <td><%= book.asin  %></td>
+      <td><%= link_to book.url , book.url %></td>
+      <td><%= book.image %></td>
     </tr>
     <% end %>
   </tbody>

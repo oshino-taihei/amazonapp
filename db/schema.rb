@@ -11,17 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141111223125) do
+ActiveRecord::Schema.define(version: 20141214090035) do
 
   create_table "books", force: true do |t|
-    t.string   "asin"
+    t.string   "asin",       limit: 13
     t.string   "title"
-    t.integer  "book_id"
+    t.string   "url"
+    t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "books", ["book_id"], name: "index_books_on_book_id"
+  add_index "books", ["asin"], name: "index_books_on_asin", unique: true
 
   create_table "links", force: true do |t|
     t.string   "from_id"
