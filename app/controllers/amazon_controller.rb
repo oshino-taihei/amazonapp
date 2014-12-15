@@ -28,9 +28,9 @@ class AmazonController < ApplicationController
     links.each do |link|
       begin
         if l = Link.where(from_asin:link[:from_asin], to_asin:link[:to_asin]).first
-          l.update(link)
+          l.update({from_asin:link[:from_asin], from_title:link[:from_title], to_asin:link[:to_asin], to_title:link[:to_title]})
         else
-          l = Link.new(link)
+          l = Link.new({from_asin:link[:from_asin], from_title:link[:from_title], to_asin:link[:to_asin], to_title:link[:to_title]})
         end
         l.save
       rescue
