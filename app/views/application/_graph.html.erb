@@ -1,0 +1,93 @@
+<span>
+<span id="tooltip"></span>
+<style>
+  span#tooltip{
+    position: absolute;
+    z-index: 10;
+    visibility: hidden;
+    padding: 0 5px;
+    border: 1px solid #000;
+    border-radius: 3px;
+    background-color: #333;
+    color: #fff;
+    font-size: 11px;
+    opacity: 0.8;
+  }
+</style>
+<%= javascript_tag do %>
+  /***********************
+   * Initialize
+   ***********************/
+   var nodes = <%= @results[:books].to_json.html_safe %> ;
+   var links = <%= @results[:links].to_json.html_safe %> ;
+   var w = 800;
+   var h = 600;
+
+  /**********************
+   * Functions
+   **********************/
+function render_graph(nodes,links) {
+   var force = d3.layout.force()
+                 .nodes(nodes)
+                 .links(links)
+                 .size([w, h])
+                 .linkStrength(0.1)
+                 .friction(0.9)
+                 .linkDistance(200)
+                 .charge(-200)
+                 .gravity(0.1)
+                 .theta(0.8)
+                 .alpha(0.1)
+                 .start();
+
+    var svg = d3.select("span").append("svg").attr({width:w, height:h});
+    var link = svg.selectAll("line")
+                  .data(links)
+                  .enter()
+                  .append("line")
+                  .style({"stroke": "#ccc",
+                          "stroke-width": 1});
+
+    var g = svg.selectAll("g")
+                  .data(nodes)
+                  .enter()
+                  .append("g")
+                  .call(force.drag);
+
+    var node = g.append("image")
+                  .attr({"xlink:href": function(d) {
+                          return d.image;
+                         },
+                         "width":75,
+                         "height":60
+                        })
+                  .on("mouseover", function(d) {
+                    $("#tooltip").css("visibility", "visible")
+                                 .text(d.title)
+                                 .css("top", d.y + 120)
+                                 .css("left", d.x);
+                  })
+                  .on("mouseout", function(d) {
+                    $("#tooltip").css("visibility", "hidden");
+                  })
+                  .on("click", function(d) {
+                    if (d.url) {
+                      window.open(d.url);
+                    };
+                  });
+
+    force.on("tick", function() {
+      link.attr({x1: function(d) { return d.source.x; },
+                 y1: function(d) { return d.source.y; },
+                 x2: function(d) { return d.target.x; },
+                 y2: function(d) { return d.target.y; }});
+      g.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+    });
+};
+  /***********************
+   * MAIN
+   ***********************/
+  render_graph(nodes, links);
+
+<% end %>
+</span>
