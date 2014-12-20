@@ -1,9 +1,12 @@
 class AmazonController < ApplicationController
   def search
     if params[:search]
-      @results = AmazonUtil::search_amazon(params[:search][:keyword]) if params[:search]
+      results = AmazonUtil::search_amazon(params[:search][:keyword])
+      @books = results[:books]
+      @links = results[:links]
     else
-      @results = {books:[], links:[]}
+      @books = []
+      @links = []
     end
   end
 

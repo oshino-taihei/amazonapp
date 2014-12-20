@@ -15,13 +15,15 @@
 <table class="table">
 <thead>
 <tr>
-  <th>From</th><th>To</th>
+  <th>From</th>
+  <th>To</th>
 </tr>
 </thead>
 <tbody>
-<% @results[:links].each do |link| %>
+<% @links.each do |link| %>
 <tr>
-  <td><%= link[:from_title] %></td><td><%= link[:to_title] %></td>
+  <td><%= link[:from_title] %>
+  <td><%= link[:to_title] %>
 </tr>
 <% end %>
 </tbody>

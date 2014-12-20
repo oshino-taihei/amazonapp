@@ -18,8 +18,8 @@
   /***********************
    * Initialize
    ***********************/
-   var nodes = <%= @results[:books].to_json.html_safe %> ;
-   var links = <%= @results[:links].to_json.html_safe %> ;
+   var nodes = <%= @books.to_json.html_safe %>;
+   var links = <%= @links.to_json.html_safe %>;
    var w = 800;
    var h = 600;
 
