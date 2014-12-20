@@ -3,8 +3,8 @@ Rails.application.routes.draw do
 
   get 'amazon/search'
   get 'amazon/crawl'
+  get 'amazon/complete'
 
   get 'books/viz'
-  get 'books/complete'
   resources:books
 end

@@ -48,10 +48,20 @@ class AmazonController < ApplicationController
     redirect_to books_path
   end
 
-  private
-
   def complete
-    @books = Book.where(url:nil)
+    books = Book.where(url:nil)
+    books.each do |book|
+      begin
+        results = AmazonUtil::lookup_amazon(book.asin)
+        book.update(results[:books].first)
+        book.save
+      rescue
+        puts "WARNING: lookup was failed: #{book.asin}:#{book.title}"
+        sleep 2
+      ensure 
+        sleep 1
+      end
+    end
 
     redirect_to books_path
   end
