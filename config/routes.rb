@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
+  root 'books#index'
+
   get 'amazon/search'
   get 'amazon/crawl'
 
-  #root 'books#index'
-  root 'amazon#search'
+  get 'books/viz'
   resources:books
 end

@@ -10,14 +10,13 @@
     </tr>
   </thead>
   <tbody>
-    <p>検索:</p>
+    <p>Amazonからデータ取得: </p>
     <p>
       <%= form_tag('/amazon/crawl', method: :get) do %>
         <% text_field :crawl, :keyword do |f| %>
         <% end %>
       <% end %>
     </p>
-
 
     <% @books.each do |book| %>
     <tr>

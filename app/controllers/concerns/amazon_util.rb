@@ -54,6 +54,16 @@ class AmazonUtil
     return results
   end
 
+  # 配列に要素があればその位置を返す。なければ末尾に追加し、その位置を返す。
+  def self.index_or_add(arr, elem)
+    # すでに要素があればその位置を返す
+    idx = arr.index(elem)
+    return idx if idx
+    # なければ末尾に追加し、その位置を返す
+    arr << elem
+    return arr.length - 1
+  end
+
   private
 
   # 共通リクエストを作成する
@@ -115,13 +125,4 @@ class AmazonUtil
     return {books: books, links: links}
   end
 
-  # 配列に要素があればその位置を返す。なければ末尾に追加し、その位置を返す。
-  def self.index_or_add(arr, elem)
-    # すでに要素があればその位置を返す
-    idx = arr.index(elem)
-    return idx if idx
-    # なければ末尾に追加し、その位置を返す
-    arr << elem
-    return arr.length - 1
-  end
 end
