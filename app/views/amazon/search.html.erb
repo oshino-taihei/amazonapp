@@ -2,11 +2,11 @@
 <%= javascript_include_tag "bootstrap" %>
 <div class="container" style="padding:20px 0">
 <h1>Amazon App</h1>
-<p>キーワードで本のタイトルを検索:</p>
 <p>
 <%= form_tag('/amazon/search', method: :get) do %>
-  <% text_field :search, :keyword do |f| %>
-  <% end %>
+  <%= label_tag :keyword, "Amazonから検索: " %>
+  <%= text_field_tag :keyword %>
+  <%= submit_tag "Search" %>
 <% end %>
 </p>
 

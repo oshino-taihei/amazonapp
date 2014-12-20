@@ -5,5 +5,6 @@ Rails.application.routes.draw do
   get 'amazon/crawl'
 
   get 'books/viz'
+  get 'books/complete'
   resources:books
 end

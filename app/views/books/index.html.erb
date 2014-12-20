@@ -10,11 +10,11 @@
     </tr>
   </thead>
   <tbody>
-    <p>Amazonからデータ取得: </p>
     <p>
       <%= form_tag('/amazon/crawl', method: :get) do %>
-        <% text_field :crawl, :keyword do |f| %>
-        <% end %>
+        <%= label_tag :keyword, "Amazonからデータ取得: " %>
+        <%= text_field_tag :keyword %>
+        <%= submit_tag "Search" %>
       <% end %>
     </p>
 

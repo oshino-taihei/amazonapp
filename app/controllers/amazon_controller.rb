@@ -1,7 +1,7 @@
 class AmazonController < ApplicationController
   def search
-    if params[:search]
-      results = AmazonUtil::search_amazon(params[:search][:keyword])
+    if params[:keyword]
+      results = AmazonUtil::search_amazon(params[:keyword])
       @books = results[:books]
       @links = results[:links]
     else
@@ -11,7 +11,11 @@ class AmazonController < ApplicationController
   end
 
   def crawl
-    results = AmazonUtil::crawl_amazon(params[:crawl][:keyword]) if params[:crawl]
+    if params[:keyword]
+      results = AmazonUtil::crawl_amazon(params[:keyword]) if params[:keyword]
+    else
+      results = {books:[], links:[]}
+    end
 
     books = results[:books]
     books.each do |book|
@@ -40,6 +44,14 @@ class AmazonController < ApplicationController
         puts "ERROR: Link insert or update: #{l}"
       end
     end
+
+    redirect_to books_path
+  end
+
+  private
+
+  def complete
+    @books = Book.where(url:nil)
 
     redirect_to books_path
   end
