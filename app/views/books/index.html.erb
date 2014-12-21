@@ -19,6 +19,14 @@
     <%= submit_tag "Complete" %>
   <% end %>
 </p>
+<h3>ビジュアライズ</h3>
+<p>
+  <%= form_tag(:books_viz, method: :get) do %>
+    <%= label_tag :keyword, "タイトル: " %>
+    <%= text_field_tag :keyword %>
+    <%= submit_tag "Search" %>
+  <% end %>
+</p>
 <h3>検索</h3>
 <p>
   <%= form_tag(:books, method: :get) do %>
