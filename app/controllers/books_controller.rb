@@ -1,6 +1,6 @@
 class BooksController < ApplicationController
   def index
-    @books = Book.all
+    @books = search(params[:keyword])
   end
 
   def show
@@ -26,5 +26,16 @@ class BooksController < ApplicationController
       l = {source:source, target:target}
       @links << l
     end
+  end
+
+  private
+
+  def search(keyword)
+    if keyword
+      books = Book.where('title LIKE ?', "%#{keyword}%") 
+    else
+      books = Book.all
+    end
+    return books
   end
 end

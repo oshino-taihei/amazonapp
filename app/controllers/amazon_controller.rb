@@ -48,6 +48,11 @@ class AmazonController < ApplicationController
     redirect_to books_path
   end
 
+  def expand
+
+    redirect_to books_path
+  end
+
   def complete
     books = Book.where(url:nil)
     books.each do |book|
