@@ -49,7 +49,6 @@ class AmazonController < ApplicationController
   end
 
   def expand
-
     redirect_to books_path
   end
 

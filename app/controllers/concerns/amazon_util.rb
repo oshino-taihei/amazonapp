@@ -29,9 +29,9 @@ class AmazonUtil
   end
   
   # ItemID(ASIN)指定検索をする
-  def self.lookup_amazon(item_id)
+  def self.lookup_amazon(item_ids)
     req = self.make_common_request
-    req << "ItemId=#{item_id}"
+    req << "ItemId=#{CGI.escape(item_ids)}"
     req << "Operation=ItemLookup"
 
     books = self.request_amazon(req)
