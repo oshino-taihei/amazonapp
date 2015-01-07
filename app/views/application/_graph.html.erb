@@ -59,7 +59,8 @@ function render_graph(nodes,links) {
                           return d.image;
                          },
                          "width":75,
-                         "height":60
+                         "height":60,
+                         "transform":"translate(-37.5,-30)"
                         })
                   .on("mouseover", function(d) {
                     $("#tooltip").css("visibility", "visible")
