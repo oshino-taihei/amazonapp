@@ -13,9 +13,9 @@ require "open-uri"
 class AmazonUtil
   AWS_HOST = 'ecs.amazonaws.jp'
   VERSION = '2011-08-02'
-  ACCESS_KEY = 'xxxxxxxx'
-  SECRET_KEY = 'xxxxxxxx'
-  ASSOCIATE_TAG = 'xxxxxx'
+  ACCESS_KEY = ENV['AMAZON_ACCESS_KEY']
+  SECRET_KEY = ENV['AMAZON_SECRET_KEY']
+  ASSOCIATE_TAG = ENV['AMAZON_ASSOCIATE_TAG']
 
   # キーワード検索をする
   def self.search_amazon(keywords)
