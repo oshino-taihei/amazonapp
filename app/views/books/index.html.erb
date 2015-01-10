@@ -2,24 +2,24 @@
 <div class="container" style="padding:20px 0">
 <p>
   <%= form_tag('/amazon/crawl', method: :get) do %>
-    <%= label_tag :keyword, "Amazonからデータ取得: " %>
+    <%= label_tag :keyword, "Amazonから書籍データを検索しDBに登録: " %>
     <%= text_field_tag :keyword %>
     <%= submit_tag "Crawl" %>
   <% end %>
 </p>
 <p>
   <%= form_tag('/amazon/expand', method: :get) do %>
-    <%= label_tag :expand, "Booksデータを拡張: " %>
+    <%= label_tag :expand, "DBのBooksデータからリンクをたどりDBデータを拡張: " %>
     <%= submit_tag "Expand" %>
   <% end %>
 </p>
 <p>
   <%= form_tag('/amazon/complete', method: :get) do %>
-    <%= label_tag :complete, "Booksデータを補完: " %>
+    <%= label_tag :complete, "DBのBooksデータのうち画像やURLが未取得なものを補完: " %>
     <%= submit_tag "Complete" %>
   <% end %>
 </p>
-<h3>ビジュアライズ</h3>
+<h3>DBデータのビジュアライズ</h3>
 <p>
   <%= form_tag(:books_viz, method: :get) do %>
     <%= label_tag :keyword, "タイトル: " %>
@@ -27,7 +27,7 @@
     <%= submit_tag "Search" %>
   <% end %>
 </p>
-<h3>検索</h3>
+<h3>DBデータを検索し一覧表示</h3>
 <p>
   <%= form_tag(:books, method: :get) do %>
     <%= label_tag :keyword, "タイトル: " %>
