@@ -28,6 +28,26 @@ class BooksController < ApplicationController
     end
   end
 
+  def upload
+    text = params[:tsvfile].read
+    text.each_line do |line|
+      next unless line
+      s = line.force_encoding("utf-8").split(/\t/)
+      asin = s[0].to_s
+      title = s[1].to_s
+      book = {asin: asin, url: nil, title: title, image: nil}
+      begin
+        unless Book.where(asin: asin).first
+          b = Book.new(book)
+          b.save
+        end
+      rescue => e
+        puts "ERROR: Book insert : #{asin}:#{title}: #{e.message}"
+      end
+    end
+    redirect_to books_path
+  end
+
   private
 
   def search(keyword)

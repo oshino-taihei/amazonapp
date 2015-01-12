@@ -7,5 +7,6 @@ Rails.application.routes.draw do
   get 'amazon/complete'
 
   get 'books/viz'
+  post 'books/upload'
   resources:books
 end

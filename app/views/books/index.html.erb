@@ -19,6 +19,15 @@
     <%= submit_tag "Complete" %>
   <% end %>
 </p>
+<h3>TSVファイルアップロード</h3>
+<p>ASIN<タブ>書籍タイトル のTSV形式のファイルを指定</p>
+<p>
+  <%= form_tag('/books/upload', method: :post, multipart: true) do %>
+    <%= label_tag :upload, "TSVファイルを選択:" %>
+    <%= file_field_tag :tsvfile %>
+    <%= submit_tag "Upload" %>
+  <% end %>
+</p>
 <h3>DBデータのビジュアライズ</h3>
 <p>
   <%= form_tag(:books_viz, method: :get) do %>
