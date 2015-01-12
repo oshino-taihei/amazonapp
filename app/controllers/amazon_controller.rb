@@ -26,8 +26,8 @@ class AmazonController < ApplicationController
           b = Book.new(book)
         end
         b.save
-      rescue
-        puts "ERROR: Book insert or update: #{b.asin}:#{b.title}"
+      rescue => e
+        puts "ERROR: Book insert or update: #{b.asin}:#{b.title}: #{e.message}"
       end
     end
 
@@ -40,8 +40,8 @@ class AmazonController < ApplicationController
           l = Link.new({from_asin:link[:from_asin], from_title:link[:from_title], to_asin:link[:to_asin], to_title:link[:to_title]})
         end
         l.save
-      rescue
-        puts "ERROR: Link insert or update: #{l}"
+      rescue => e
+        puts "ERROR: Link insert or update: #{l}: #{e.message}"
       end
     end
 
@@ -59,8 +59,8 @@ class AmazonController < ApplicationController
         results = AmazonUtil::lookup_amazon(book.asin)
         book.update(results[:books].first)
         book.save
-      rescue
-        puts "WARNING: lookup was failed: #{book.asin}:#{book.title}"
+      rescue => e
+        puts "WARNING: lookup was failed: #{book.asin}:#{book.title}: #{e.message}"
         sleep 2
       ensure 
         sleep 1

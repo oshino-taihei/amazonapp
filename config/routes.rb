@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get 'amazon/complete'
 
   get 'books/viz'
+  delete 'books/purge'
   post 'books/upload'
   resources:books
 end

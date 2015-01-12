@@ -28,7 +28,7 @@
     <%= submit_tag "Upload" %>
   <% end %>
 </p>
-<h3>DBデータのビジュアライズ</h3>
+<h3>DBデータのグラフビジュアライズ</h3>
 <p>
   <%= form_tag(:books_viz, method: :get) do %>
     <%= label_tag :keyword, "タイトル: " %>
@@ -44,6 +44,7 @@
     <%= submit_tag "Search" %>
   <% end %>
 </p>
+<p><%= link_to '全DBデータ削除', books_purge_path, method: :delete, data: {confirm: '本当にDBデータを削除しますか' } %></p>
 <table class="table">
   <thead>
     <tr>

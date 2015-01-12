@@ -48,6 +48,12 @@ class BooksController < ApplicationController
     redirect_to books_path
   end
 
+  def purge
+    Link.destroy_all
+    Book.destroy_all
+    redirect_to books_path
+  end
+
   private
 
   def search(keyword)
