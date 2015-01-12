@@ -65,7 +65,6 @@ class BooksController < ApplicationController
     return books
   end
 
-
   def search_link(keyword)
     if keyword
       links = Link.where('from_title LIKE ? OR to_title LIKE ?', "%#{keyword}%", "%#{keyword}%")

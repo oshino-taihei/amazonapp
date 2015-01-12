@@ -49,6 +49,7 @@ class AmazonController < ApplicationController
   end
 
   def expand
+    
     redirect_to books_path
   end
 
@@ -59,6 +60,18 @@ class AmazonController < ApplicationController
         results = AmazonUtil::lookup_amazon(book.asin)
         book.update(results[:books].first)
         book.save
+
+        links = results[:links]
+        links.each do |link|
+          begin
+            unless Link.where(from_asin:link[:from_asin], to_asin:link[:to_asin]).first
+              l = Link.new({from_asin:link[:from_asin], from_title:link[:from_title], to_asin:link[:to_asin], to_title:link[:to_title]})
+              l.save
+            end
+          rescue => e
+            puts "ERROR: Link update: #{l}: #{e.message}"
+          end
+        end
       rescue => e
         puts "WARNING: lookup was failed: #{book.asin}:#{book.title}: #{e.message}"
         sleep 2
