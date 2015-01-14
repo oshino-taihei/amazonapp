@@ -26,6 +26,17 @@
   /**********************
    * Functions
    **********************/
+function calc_intersection(x1, y1, x2, y2, r) {
+  var l = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+  var p1x = ((l - r) * x1 + r * x2) / l;
+  var p1y = ((l - r) * y1 + r * y2) / l;
+  var p2x = (r * x1 + (l - r) * x2) / l;
+  var p2y = (r * y1 + (l - r) * y2) / l;
+  var p1 = [p1x, p1y];
+  var p2 = [p2x, p2y];
+  return [p1, p2];
+}
+
 function render_graph(nodes,links) {
    var force = d3.layout.force()
                  .nodes(nodes)
@@ -41,12 +52,20 @@ function render_graph(nodes,links) {
                  .start();
 
     var svg = d3.select("span").append("svg").attr({width:w, height:h});
-    var link = svg.selectAll("line")
-                  .data(links)
-                  .enter()
-                  .append("line")
-                  .style({"stroke": "#ccc",
-                          "stroke-width": 1});
+    var marker = svg.append("defs").append("marker")
+        .attr({
+          'id': "arrowhead",
+          'refX': 0,
+          'refY': 10,
+          'markerWidth': 20,
+          'markerHeight': 20,
+          'orient': "auto"
+        })
+      marker.append("path")
+        .attr({
+          d: "M 0,0 V 20 L20,10 Z",
+          fill: "Maroon"
+        })
 
     var g = svg.selectAll("g")
                   .data(nodes)
@@ -70,18 +89,31 @@ function render_graph(nodes,links) {
                   })
                   .on("mouseout", function(d) {
                     $("#tooltip").css("visibility", "hidden");
-                  })
+                  });
+                  /*
                   .on("click", function(d) {
                     if (d.url) {
                       window.open(d.url);
                     };
                   });
+                  */
+
+    var link = svg.selectAll("line")
+                  .data(links)
+                  .enter()
+                  .append("line")
+                  .style({"stroke": "#ccc",
+                          "stroke-width": 1,
+                          "marker-end":"url(#arrowhead)",
+                         });
 
     force.on("tick", function() {
+      var r = 40;
       link.attr({x1: function(d) { return d.source.x; },
                  y1: function(d) { return d.source.y; },
-                 x2: function(d) { return d.target.x; },
-                 y2: function(d) { return d.target.y; }});
+                 x2: function(d) { return calc_intersection(d.source.x, d.source.y, d.target.x, d.target.y, r)[1][0]; },
+                 y2: function(d) { return calc_intersection(d.source.x, d.source.y, d.target.x, d.target.y, r)[1][1]; }
+                });
       g.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
     });
 };
