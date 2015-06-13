@@ -22,6 +22,8 @@
    var links = <%= @links.to_json.html_safe %>;
    var w = 800;
    var h = 600;
+   var bw = 60;
+   var bh = bw * 4 / 5;
 
   /**********************
    * Functions
@@ -77,14 +79,14 @@ function render_graph(nodes,links) {
                   .attr({"xlink:href": function(d) {
                           return d.image;
                          },
-                         "width":75,
-                         "height":60,
-                         "transform":"translate(-37.5,-30)"
+                         "width":bw,
+                         "height":bh,
+                         "transform":"translate(" + -bw / 2.0 + "," + -bh / 2.0 + ")"
                         })
                   .on("mouseover", function(d) {
                     $("#tooltip").css("visibility", "visible")
                                  .text(d.title)
-                                 .css("top", d.y + 120)
+                                 .css("top", d.y + bh)
                                  .css("left", d.x);
                   })
                   .on("mouseout", function(d) {
